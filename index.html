@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="wrap">
+        <script type="text/x-handlebars-template" id="del">
+            <div class="small-box">
+                <h2>{{name}}</h2>
+                <div class="main-me">
+                    {{#each children}}
+                    <h3>{{name}}</h3>
+                    <div class="me-childtwo">
+                        {{#each children}}
+                        <h4>{{name}}</h4>
+                        <div class="me-childf">
+                            {{#each children}}
+                            <h5>{{name}}</h5>
+                            <div class="me-next">
+                                <h6>{{name}}</h6>
+                            </div>
+                            {{/each}}
+                        </div>
+                        {{/each}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </script>
+    </div>
+    <script src="./src/js/libs/handlebars.js"></script>
+    <script src="./src/js/libs/jquery-2.1.1.min.js"></script>
+    <script>
+        $.ajax({
+            url: "/index",
+            success: function(res) {
+                var Obj = JSON.parse(res)[0];
+                var sourceSwiper = $("#del").html();
+                var template = Handlebars.compile(sourceSwiper);
+                console.log(Obj)
+                var htmlObj = template(Obj)
+                console.log(htmlObj)
+                $(".wrap").html(htmlObj)
+                Tab()
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
+
+        function Tab() {
+            var h3none = document.querySelectorAll("h3")[0]
+            var h3next = document.querySelectorAll("h3")[1]
+            var h4none = document.querySelectorAll("h4")[0]
+            var h4next = document.querySelectorAll("h4")[1]
+            var h4th = document.querySelectorAll("h4")[2]
+            var h5next = document.querySelectorAll("h4")[3]
+            var h5th = document.querySelectorAll("h4")[4]
+            console.log(h3none)
+            $("h2").on("click", function() {
+                $(".main-me").toggle()
+            })
+            $(h3none).on("click", function() {
+                $(".me-childtwo").eq(0).toggle()
+            });
+            $(h3next).on("click", function() {
+                $(".me-childtwo").eq(1).toggle()
+            });
+            $(h4none).on("click", function() {
+                $(".me-childf").eq(0).toggle()
+            });
+            $(h4next).on("click", function() {
+                $(".me-childf").eq(1).toggle()
+            });
+            $(h4th).on("click", function() {
+                $(".me-childf").eq(2).toggle()
+            });
+            $(h5next).on("click", function() {
+                $(".me-childf").eq(3).toggle()
+            });
+            $(h5th).on("click", function() {
+                $(".me-childf").eq(4).toggle()
+            });
+        }
+    </script>
+</body>
+
+</html>
